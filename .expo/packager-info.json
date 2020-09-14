@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 15404,
+  "expoServerNgrokUrl": "https://nh-c7k.anonymous.rn-maptracking.exp.direct",
+  "packagerNgrokUrl": "https://packager.nh-c7k.anonymous.rn-maptracking.exp.direct",
+  "ngrokPid": 8840
 }
