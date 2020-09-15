@@ -38,6 +38,20 @@ const signout = (dispatch) => {
     };
 };
 
+const tryLocalSignin = (dispatch) => {
+    return async () => {
+        const token = await AsyncStorage.getItem('mapTrackingUserToken');
+
+        if (token) {
+            dispatch({ type: 'SET_LOGIN', payload: { token: token } });
+            navigate('TrackList');
+        }
+        else {
+            navigate('Signup');
+        }
+    }
+}
+
 const clearError = (dispatch) => {
     return () => dispatch({ type: 'CLEAR_ERROR' });
 };
@@ -58,7 +72,7 @@ const handleSignIn = (dispatch, email, password) => {
 
 export const { Context, Provider } = createDataContext(
     authReducer,
-    { signup, signin, signout, clearError },
+    { signup, signin, signout, clearError, tryLocalSignin },
     {
         token: null,
         error: null,
