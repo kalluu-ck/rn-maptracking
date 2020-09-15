@@ -33,8 +33,10 @@ const signin = (dispatch) => {
 };
 
 const signout = (dispatch) => {
-    return () => {
-
+    return async () => {
+        await AsyncStorage.removeItem('mapTrackingUserToken');
+        dispatch({ type: 'SET_LOGIN', payload: { token: '' } });
+        navigate('loginFlow');
     };
 };
 
