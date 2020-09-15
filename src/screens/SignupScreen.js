@@ -12,17 +12,16 @@ const SignupScreen = ({ navigation }) => {
             <Text h3>Sign Up for Tracker</Text>
             <Spacer />
             <Input
-
                 label='Email'
                 value={email}
                 onChangeText={setEmail}
-                autoCapitalize={false}
+                autoCapitalize="none"
             />
             <Input
                 label='Password'
                 value={password}
                 onChangeText={setPassword}
-                autoCapitalize={false}
+                autoCapitalize="none"
                 secureTextEntry
             />
             <Spacer>

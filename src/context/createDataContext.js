@@ -16,7 +16,7 @@ export default (reducer, actions, initState) => {
                 {children}
             </Context.Provider>
         );
-    }
+    };
 
     return { Context, Provider };
 }

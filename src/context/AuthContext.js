@@ -12,4 +12,5 @@ export const { Context, Provider } = createDataContext(
     {},
     {
         isSignedIn: false
-    });
+    }
+);
