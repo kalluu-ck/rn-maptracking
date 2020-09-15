@@ -1,14 +1,16 @@
 import React, { useContext } from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
+import { NavigationEvents } from 'react-navigation'
 import { Context as AuthContext } from '../context/AuthContext'
 import AuthForm from '../components/AuthForm'
 import NavLink from '../components/NavLink'
 
 const SigninScreen = () => {
-    const { state, signin } = useContext(AuthContext);
+    const { state, signin, clearError } = useContext(AuthContext);
 
     return (
         <ScrollView justifyContent="center" style={styles.containerStyle}>
+            <NavigationEvents onWillFocus={clearError} />
             <AuthForm
                 title='Sign In to Your Account'
                 submitButtonTitle='Sign In'
