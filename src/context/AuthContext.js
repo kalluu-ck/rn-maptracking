@@ -17,17 +17,7 @@ const authReducer = (state, action) => {
 const signup = (dispatch) => (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((respCreate) => {
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(async (respSignIn) => {
-                    const tokenResult = await respSignIn.user.getIdTokenResult();
-                    const token = tokenResult.token;
-                    await AsyncStorage.setItem('mapTrackingUserToken', token);
-                    dispatch({ type: 'SETLOGIN', payload: { token: token } });
-                    navigate('TrackList');
-                })
-                .catch(e => {
-                    dispatch({ type: 'ADD_ERROR', payload: { error: e.message } })
-                })
+            handleSignIn(dispatch, email, password);
         })
         .catch(e => {
             dispatch({ type: 'ADD_ERROR', payload: { error: e.message } })
@@ -36,7 +26,7 @@ const signup = (dispatch) => (email, password) => {
 
 const signin = (dispatch) => {
     return (email, password) => {
-
+        handleSignIn(dispatch, email, password);
     }
 }
 
@@ -44,6 +34,20 @@ const signout = (dispatch) => {
     return () => {
 
     }
+}
+
+const handleSignIn = (dispatch, email, password) => {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(async (respSignIn) => {
+            const tokenResult = await respSignIn.user.getIdTokenResult();
+            const token = tokenResult.token;
+            await AsyncStorage.setItem('mapTrackingUserToken', token);
+            dispatch({ type: 'SETLOGIN', payload: { token: token } });
+            navigate('TrackList');
+        })
+        .catch(e => {
+            dispatch({ type: 'ADD_ERROR', payload: { error: e.message } })
+        })
 }
 
 export const { Context, Provider } = createDataContext(

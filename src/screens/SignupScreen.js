@@ -1,36 +1,24 @@
-import React, { useContext, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { Text, Input, Button } from 'react-native-elements'
+import React, { useContext } from 'react'
+import { StyleSheet, ScrollView } from 'react-native'
 import { Context as AuthContext } from '../context/AuthContext'
-import Spacer from '../components/Spacer'
-import { ScrollView } from 'react-native-gesture-handler'
+import AuthForm from '../components/AuthForm'
+import NavLink from '../components/NavLink'
 
-const SignupScreen = ({ navigation }) => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+const SignupScreen = () => {
     const { state, signup } = useContext(AuthContext);
 
     return (
         <ScrollView justifyContent="center" style={styles.containerStyle}>
-            <Text h3>Sign Up for Tracker</Text>
-            <Spacer />
-            <Input
-                label='Email'
-                value={email}
-                onChangeText={setEmail}
-                autoCapitalize="none"
+            <AuthForm
+                title='Sign Up for Tracker'
+                submitButtonTitle='Sign Up'
+                submitButtonOnPress={signup}
+                error={state.error}
             />
-            <Input
-                label='Password'
-                value={password}
-                onChangeText={setPassword}
-                autoCapitalize="none"
-                secureTextEntry
+            <NavLink
+                text='Already have an account? Sign in instead'
+                routeName='Signin'
             />
-            {state && state.error ? <Text style={styles.errorStyle}>An error has occured: {state.error}</Text> : null}
-            <Spacer>
-                <Button title='Sign Up' onPress={() => { signup(email, password) }} />
-            </Spacer>
         </ScrollView>
     );
 }
@@ -44,11 +32,7 @@ SignupScreen.navigationOptions = () => {
 const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
-        marginBottom: 150
-    },
-    errorStyle: {
-        color: 'red',
-        margin: 15
+        marginBottom: 100
     }
 });
 
