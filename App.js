@@ -35,7 +35,7 @@ const switchNavigator = createSwitchNavigator({
 const App = createAppContainer(switchNavigator);
 
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
-var firebaseConfig = {
+let firebaseConfig = {
   apiKey: "AIzaSyAciBTWzR4XiBxBFE08fi3_bqaMM_2GRDc",
   authDomain: "maptracking-32fae.firebaseapp.com",
   databaseURL: "https://maptracking-32fae.firebaseio.com",
