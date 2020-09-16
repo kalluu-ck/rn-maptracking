@@ -13,6 +13,7 @@ import TrackListScreen from './src/screens/TrackListScreen'
 import { Provider as AuthProvider } from './src/context/AuthContext'
 import { setNavigator } from './src/navigationRef'
 import ResultAuthScreen from './src/screens/ResultAuthScreen'
+import { Provider as LocationProvider } from './src/context/LocationContext'
 
 const switchNavigator = createSwitchNavigator({
   ResultAuth: ResultAuthScreen,
@@ -47,8 +48,10 @@ firebase.initializeApp(firebaseConfig);
 
 export default () => {
   return (
-    <AuthProvider>
-      <App ref={(navigator) => { setNavigator(navigator) }} />
-    </AuthProvider>
+    <LocationProvider>
+      <AuthProvider>
+        <App ref={(navigator) => { setNavigator(navigator) }} />
+      </AuthProvider>
+    </LocationProvider>
   );
 }
