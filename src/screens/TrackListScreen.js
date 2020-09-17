@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, FlatList, TouchableOpacity } from 'react-native'
 import { Context as TrackContext } from '../context/TrackContext'
 import { Context as AuthContext } from '../context/AuthContext'
 import { NavigationEvents } from 'react-navigation'
@@ -12,7 +12,6 @@ const TrackListScreen = ({ navigation }) => {
     return (
         <>
             <NavigationEvents onWillFocus={() => { fetchTracks(userId) }}></NavigationEvents>
-            <Text>TrackListScreen Screen!</Text>
             <FlatList
                 data={tracks}
                 keyExtractor={(item) => item.id}
@@ -24,6 +23,10 @@ const TrackListScreen = ({ navigation }) => {
             />
         </>
     );
+};
+
+TrackListScreen.navigationOptions = {
+    title: 'Tracks'
 }
 
 const styles = StyleSheet.create({});

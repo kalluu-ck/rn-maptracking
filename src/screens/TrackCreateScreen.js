@@ -9,6 +9,7 @@ import { Context as LocationContext } from '../context/LocationContext'
 import useLocation from '../hooks/useLocation'
 import TrackForm from '../components/TrackForm'
 import { ScrollView } from 'react-native-gesture-handler'
+import { FontAwesome } from '@expo/vector-icons';
 
 const TrackCreateScreen = ({ isFocused }) => {
     const { state: { recording }, addLocation } = useContext(LocationContext);
@@ -30,6 +31,11 @@ const TrackCreateScreen = ({ isFocused }) => {
         </ScrollView>
     );
 }
+
+TrackCreateScreen.navigationOptions = {
+    title: 'Add Track',
+    tabBarIcon: <FontAwesome name="plus" size={20} color="black" />
+};
 
 const styles = StyleSheet.create({
 
