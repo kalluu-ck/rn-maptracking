@@ -3,15 +3,24 @@ import firebase from 'firebase'
 
 const trackReducer = (state, action) => {
     switch (action.type) {
+        case 'FETCH_TRACKS':
+            return action.payload;
         default:
             return state;
     }
 };
 
 const fetchTracks = (dispatch) => {
-    return () => {
-
-    }
+    return (userId) => {
+        firebase.database().ref(`/users/${userId}/tracks`)
+            .on('value', snapshot => {
+                const data = snapshot.val();
+                const tracks = Object.keys(data).map((key) => {
+                    return { ...data[key], id: key };
+                })
+                dispatch({ type: 'FETCH_TRACKS', payload: tracks })
+            });
+    };
 };
 
 const createTrack = (dispatch) => {
