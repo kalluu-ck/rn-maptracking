@@ -12,12 +12,14 @@ const trackReducer = (state, action) => {
 
 const fetchTracks = (dispatch) => {
     return (userId) => {
+        console.log('TrackContext: userId', userId);
         firebase.database().ref(`/users/${userId}/tracks`)
             .on('value', snapshot => {
                 const data = snapshot.val();
                 const tracks = Object.keys(data).map((key) => {
                     return { ...data[key], id: key };
-                })
+                });
+                console.log('TrackContext tracks', tracks.length);
                 dispatch({ type: 'FETCH_TRACKS', payload: tracks })
             });
     };

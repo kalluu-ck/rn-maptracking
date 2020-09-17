@@ -45,9 +45,6 @@ const clearError = (dispatch) => {
 
 const handleSignIn = (dispatch, email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(async (resp) => {
-            navigate('TrackList');
-        })
         .catch(e => {
             dispatch({ type: 'ADD_ERROR', payload: { error: e.message } })
         })

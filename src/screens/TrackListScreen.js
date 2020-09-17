@@ -11,7 +11,11 @@ const TrackListScreen = ({ navigation }) => {
 
     return (
         <>
-            <NavigationEvents onWillFocus={() => { fetchTracks(userId) }}></NavigationEvents>
+            <NavigationEvents onWillFocus={() => {
+                console.log('tracks', tracks);
+                fetchTracks(userId);
+            }}
+            />
             <FlatList
                 data={tracks}
                 keyExtractor={(item) => item.id}
