@@ -12,7 +12,6 @@ const TrackListScreen = ({ navigation }) => {
     return (
         <>
             <NavigationEvents onWillFocus={() => {
-                console.log('tracks', tracks);
                 fetchTracks(userId);
             }}
             />
