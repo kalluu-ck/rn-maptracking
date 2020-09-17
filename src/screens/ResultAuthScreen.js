@@ -2,12 +2,7 @@ import React, { useEffect, useContext } from 'react'
 import { Context as AuthContext } from '../context/AuthContext'
 
 const ResultAuthScreen = () => {
-    const { tryLocalSignin } = useContext(AuthContext);
-
-    useEffect(() => {
-        tryLocalSignin();
-    }, []);
-
+    useContext(AuthContext);
     return null;
 };
 

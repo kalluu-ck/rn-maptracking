@@ -1,6 +1,6 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 
-export default (reducer, actions, initState) => {
+export default (reducer, actions, initState, initCallback) => {
     const Context = React.createContext();
 
     const Provider = ({ children }) => {
@@ -9,6 +9,12 @@ export default (reducer, actions, initState) => {
         const boundActions = {};
         for (let key in actions) {
             boundActions[key] = actions[key](dispatch);
+        }
+
+        if (initCallback) {
+            useEffect(() => {
+                initCallback(dispatch);
+            }, []);
         }
 
         return (

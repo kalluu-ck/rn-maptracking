@@ -8,6 +8,7 @@ import Map from '../components/Map'
 import { Context as LocationContext } from '../context/LocationContext'
 import useLocation from '../hooks/useLocation'
 import TrackForm from '../components/TrackForm'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const TrackCreateScreen = ({ isFocused }) => {
     const { state: { recording }, addLocation } = useContext(LocationContext);
@@ -19,12 +20,14 @@ const TrackCreateScreen = ({ isFocused }) => {
     const [error] = useLocation(isFocused || recording, callback);
 
     return (
-        <SafeAreaView forceInset={{ top: 'always' }}>
-            <Text h3>Create a Track</Text>
-            <Map />
-            <TrackForm />
-            {error ? <Text>Please enable location services</Text> : null}
-        </SafeAreaView>
+        <ScrollView>
+            <SafeAreaView forceInset={{ top: 'always' }}>
+                <Text h3>Create a Track</Text>
+                <Map />
+                <TrackForm />
+                {error ? <Text>Please enable location services</Text> : null}
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 

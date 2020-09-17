@@ -15,10 +15,8 @@ const fetchTracks = (dispatch) => {
 };
 
 const createTrack = (dispatch) => {
-    return async (name, locations) => {
-        console.log(name, locations.length);
-        const { currentUser } = await firebase.auth();
-        await firebase.database().ref(`/users/${currentUser.uid}/tracks`).push({
+    return async (userId, name, locations) => {
+        await firebase.database().ref(`/users/${userId}/tracks`).push({
             name: name,
             locations: locations
         });

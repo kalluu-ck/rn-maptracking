@@ -19,8 +19,8 @@ import { Provider as TrackProvider } from './src/context/TrackContext'
 const switchNavigator = createSwitchNavigator({
   ResultAuth: ResultAuthScreen,
   loginFlow: createStackNavigator({
-    Signup: SignupScreen,
     Signin: SigninScreen,
+    Signup: SignupScreen,
   }),
   mainFlow: createBottomTabNavigator({
     trackListFlow: createStackNavigator({

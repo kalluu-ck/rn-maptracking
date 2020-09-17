@@ -1,4 +1,3 @@
-import { AsyncStorage } from 'react-native'
 import createDataContext from './createDataContext'
 import firebase from 'firebase'
 import { navigate } from '../navigationRef'
@@ -6,9 +5,9 @@ import { navigate } from '../navigationRef'
 const authReducer = (state, action) => {
     switch (action.type) {
         case 'ADD_ERROR':
-            return { ...state, token: null, error: action.payload.error }
+            return { ...state, error: action.payload.error }
         case 'SET_LOGIN':
-            return { ...state, token: action.payload.token, error: '' }
+            return { ...state, userId: action.payload.userId }
         case 'CLEAR_ERROR':
             return { ...state, error: '' }
         default:
@@ -18,7 +17,7 @@ const authReducer = (state, action) => {
 
 const signup = (dispatch) => (email, password) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((respCreate) => {
+        .then((resp) => {
             handleSignIn(dispatch, email, password);
         })
         .catch(e => {
@@ -33,26 +32,12 @@ const signin = (dispatch) => {
 };
 
 const signout = (dispatch) => {
-    return async () => {
-        await AsyncStorage.removeItem('mapTrackingUserToken');
-        dispatch({ type: 'SET_LOGIN', payload: { token: '' } });
-        navigate('loginFlow');
+    return () => {
+        firebase.auth().signOut().then(() => {
+            navigate('loginFlow');
+        });
     };
 };
-
-const tryLocalSignin = (dispatch) => {
-    return async () => {
-        const token = await AsyncStorage.getItem('mapTrackingUserToken');
-
-        if (token) {
-            dispatch({ type: 'SET_LOGIN', payload: { token: token } });
-            navigate('TrackList');
-        }
-        else {
-            navigate('Signup');
-        }
-    }
-}
 
 const clearError = (dispatch) => {
     return () => dispatch({ type: 'CLEAR_ERROR' });
@@ -60,23 +45,33 @@ const clearError = (dispatch) => {
 
 const handleSignIn = (dispatch, email, password) => {
     firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(async (respSignIn) => {
-            const tokenResult = await respSignIn.user.getIdTokenResult();
-            const token = tokenResult.token;
-            await AsyncStorage.setItem('mapTrackingUserToken', token);
-            dispatch({ type: 'SET_LOGIN', payload: { token: token } });
+        .then(async (resp) => {
             navigate('TrackList');
         })
         .catch(e => {
             dispatch({ type: 'ADD_ERROR', payload: { error: e.message } })
         })
+};
+
+const watchUserAuth = (dispatch) => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            dispatch({ type: 'SET_LOGIN', payload: { userId: user.uid } });
+            navigate('TrackList');
+        }
+        else {
+            dispatch({ type: 'SET_LOGIN', payload: { userId: null } });
+            navigate('loginFlow');
+        }
+    });
 }
 
 export const { Context, Provider } = createDataContext(
     authReducer,
-    { signup, signin, signout, clearError, tryLocalSignin },
+    { signup, signin, signout, clearError },
     {
-        token: null,
+        userId: null,
         error: null,
-    }
+    },
+    watchUserAuth
 );
